@@ -1,0 +1,60 @@
+import webview, threading, json
+from screeninfo import get_monitors
+from flask import Flask, request
+import webbrowser
+
+from assets.data.data_api import DataAPI
+
+app = Flask(__name__)
+window = None
+
+class Api:
+    def __init__(self):
+       self.data = DataAPI()
+
+    def display_data(self, content):
+        print(content)
+
+api = Api()
+
+@app.route("/data_import")
+def data_import():
+    data = request.args.to_dict()
+    api.display_data(data)
+    # window.evaluate_js(f"window.onTableauData({json.dumps(data)})")
+    # window.show()
+    return "<h2>Data Received, Processing will continue on Payment Window app</h2><p>You may close this window</p>"
+
+def run_server():
+    app.run(port=5050)
+
+
+def start_payment_window():
+    monitors = get_monitors()
+    totalWidth = 0
+    totalHeight = 0
+    # avgWidth = 0
+    # avgHeight = 0
+
+    for monitor in monitors:
+        totalWidth += monitor.width
+        totalHeight += monitor.height
+
+    avgWidth = totalWidth / len(monitors)
+    avgHeight = totalHeight / len(monitors)
+
+    threading.Thread(target=run_server, daemon=True).start()
+
+    window = webview.create_window(
+        title="Payment Window",
+        url="index.html",
+        js_api=api,
+        width=avgWidth / 2,
+        height=avgHeight - 50/.25, )
+
+    webview.start(debug=True)
+
+
+if "__main__" == __name__:
+    webbrowser.open("http://nmpr-tableau.nmeaf.org/#/signin?externalRedirect=/views/PaymentWindowAccountLookup/Dashboard1?:showAppBanner%3Dfalse%26:display_couhttp://nmpr-tableau.nmeaf.org/views/PaymentWindowAccountLookup/Dashboard1?:embed%3Dyes%26:toolbar%3Dno&site=")
+    start_payment_window()
