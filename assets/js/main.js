@@ -16,7 +16,7 @@ export default async function display_main(){
     const data = await window.pywebview.api.data.get_all_payments();
     console.log(data);
     const table = await display_table(data);
-    const form = display_form("payment");
+    const form = display_form("payment", userinfo);
     section.append(table, form);
     return main;
 }

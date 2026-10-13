@@ -63,7 +63,7 @@ class Payment(Base):
             f"<Payment id={self.id} date={self.payment_date} "
             f"amount={self.payment_amount} void={self.void} posted={self.posted}>"
         )
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self):
         return {
             "id": self.id,
             "ssn_hash": self.ssn_hash,

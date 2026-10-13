@@ -1,14 +1,27 @@
-import os, win32api
-
+import hashlib
+import json
+import os, win32api, re, hmac
+from datetime import datetime
 from sqlalchemy import create_engine, select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.testing.pickleable import User
 
 from assets.data.payment import Base, Payment
 
 
+
+def parse_date(value):
+    """Convert 'YYYY-MM-DD' to a date object, or None if empty."""
+    if not value:
+        return None
+    return datetime.strptime(value, "%Y-%m-%d").date()
+
 class DataAPI:
     def __init__(self):
+        with open("assets/config.json", "r") as f:
+            self.config = json.load(f)
+
         try:
             self.engine = create_engine("sqlite:///payments.db")
             self.session = sessionmaker(bind=self.engine, expire_on_commit=False)
@@ -20,6 +33,14 @@ class DataAPI:
             print(e)
             raise
 
+    def _hash_ssn(self, ssn):
+        key = "PayWin26"
+        if not key:
+            raise ValueError("HASH KEY not set")
+        digits = re.sub(r"\D", "", ssn or "")
+        if len(digits) != 9:
+            raise ValueError("SSN Must be 9 digits")
+        return hmac.new(key.encode(), digestmod=hashlib.sha256).hexdigest()
     def get_payment_fields(self):
         return [
             'id',
@@ -40,9 +61,26 @@ class DataAPI:
     def get_current_user(self):
         user = os.getenv("USERNAME")
         name = win32api.GetUserNameEx(3)
-        print(user)
-        print(name)
         return {
             "user": user,
             "name": name
         }
+
+    def make_payment(self, data):
+        print(data)
+        data["payment_date"] = datetime.now()
+        data["ssn_hash"] = self._hash_ssn(data.get("ssn_hash"))
+
+        if data["receipt_emailed_date"] is not None and data["receipt_emailed_date"] != '':
+            data["receipt_emailed_date"] = parse_date(data["receipt_emailed_date"])
+        else:
+            data["receipt_emailed_date"] = None
+        new_payment = Payment(**data)
+        try:
+            self.db.add(new_payment)
+            self.db.commit()
+            self.db.refresh(new_payment)
+        except SQLAlchemyError as e:
+            self.db.rollback()
+            print(e)
+

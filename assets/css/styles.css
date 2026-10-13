@@ -121,8 +121,8 @@ main { padding-top: 24px; padding-bottom: 48px; }
   align-items: center;
 }
 .toolbar .grow { flex: 1 1 220px; }
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
+.table-wrap { overflow-x: scroll; }
+table { width: 100%; border-collapse: collapse; height: 200px; max-height: 300px; }
 th, td { text-align: left; padding: 11px var(--space); white-space: nowrap; }
 th {
   font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
@@ -153,7 +153,7 @@ td.actions { text-align: right; }
 .prio-low    { color: var(--text-muted); }
 
 /* ============ 6. FORM CONTROLS ============ */
-form { padding: 24px; display: grid; gap: 22px; max-width: 640px; }
+form { padding: 15px; display: grid; gap: 10px; max-width: 900px; }
 .field { display: grid; gap: 6px; }
 label, legend { font-weight: 600; font-size: 14px; }
 .hint { font-size: 13px; color: var(--text-muted); }
@@ -167,6 +167,7 @@ label, legend { font-weight: 600; font-size: 14px; }
 textarea.input { min-height: 96px; resize: vertical; }
 .input[aria-invalid="true"] { border-color: var(--danger); }
 .grid-2 { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
+.grid-3 { display: grid; gap: 15px; grid-template-columns: 1fr 1fr 1fr; }
 @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
 fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
 .options { display: flex; flex-wrap: wrap; gap: 8px 20px; }

@@ -23,6 +23,22 @@ def data_import():
     api.display_data(data)
     # window.evaluate_js(f"window.onTableauData({json.dumps(data)})")
     # window.show()
+    cur_window = webview.windows[0]
+    if cur_window:
+        borrowerName = cur_window.dom.get_element('#pay-Name')
+        address = cur_window.dom.get_element('#pay-address')
+        city = cur_window.dom.get_element('#pay-city')
+        state = cur_window.dom.get_element('#pay-state')
+        zip = cur_window.dom.get_element('#pay-zip')
+        ssn = cur_window.dom.get_element('#pay-SSN_ACCOUNT')
+
+        borrowerName.value = data["name"]
+        address.value = data["address"]
+        city.value = data["city"]
+        state.value = data["state"]
+        zip.value = data["zip"]
+        ssn.value = data["SSN"]
+
     return "<h2>Data Received, Processing will continue on Payment Window app</h2><p>You may close this window</p>"
 
 def run_server():
