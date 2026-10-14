@@ -17,7 +17,7 @@ export default async function display_main(){
     console.log(data);
     const table = await display_table(data);
     const form = display_form("payment", userinfo);
-    section.append(table, form);
+    section.append(form, table);
     return main;
 }
 

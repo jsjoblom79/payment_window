@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import create_engine, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.testing.pickleable import User
+from mailmerge import MailMerge
 
 from assets.data.payment import Base, Payment
 
@@ -44,7 +44,7 @@ class DataAPI:
     def get_payment_fields(self):
         return [
             'id',
-            'ssn_hash',
+            'last_four',
             'payment_date',
             'payment_amount',
             # 'cash_amount',
@@ -66,6 +66,14 @@ class DataAPI:
             "name": name
         }
 
+    def _generate_receipt(self, data):
+        with MailMerge(self.config["receipt_template"]) as doc:
+            print(doc.get_merge_fields())
+            print(data.to_merge().keys())
+            merge_data = {k: "" if v is None else str(v) for k, v in data.to_merge().items()}
+            doc.merge(**merge_data)
+            doc.write(f"new_test.docx")
+
     def make_payment(self, data):
         print(data)
         data["payment_date"] = datetime.now()
@@ -80,6 +88,7 @@ class DataAPI:
             self.db.add(new_payment)
             self.db.commit()
             self.db.refresh(new_payment)
+            self._generate_receipt(new_payment)
         except SQLAlchemyError as e:
             self.db.rollback()
             print(e)

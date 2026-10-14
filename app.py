@@ -31,13 +31,17 @@ def data_import():
         state = cur_window.dom.get_element('#pay-state')
         zip = cur_window.dom.get_element('#pay-zip')
         ssn = cur_window.dom.get_element('#pay-SSN_ACCOUNT')
+        system = cur_window.dom.get_element('#pay-system')
+        email = cur_window.dom.get_element('#pay-email')
 
-        borrowerName.value = data["name"]
-        address.value = data["address"]
-        city.value = data["city"]
-        state.value = data["state"]
-        zip.value = data["zip"]
+        borrowerName.value = data["Name"]
+        address.value = data["Addr1"] + " " + data["Addr2"]
+        city.value = data["City"]
+        state.value = data["State"]
+        zip.value = data["ZipCode"]
         ssn.value = data["SSN"]
+        email.value = data["EmailAdress"]
+        system.value = data["SourceSystem"]
 
     return "<h2>Data Received, Processing will continue on Payment Window app</h2><p>You may close this window</p>"
 

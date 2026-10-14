@@ -27,6 +27,8 @@ export default function display_form(id, user_info){
     const city = display_input("City", "pay-city", input_type.TEXT, false, "Albuquerque");
     const state = display_input("State", "pay-state", input_type.TEXT, false, "NM");
     const zip = display_input("Zip", "pay-zip", input_type.TEXT, false, "87109");
+    const email = display_input("Email", "pay-email", input_type.TEXT, false, "address@domain.com");
+    const system = display_input("System", "pay-system", input_type.TEXT, false, "IFA");
     const hundreds = display_input("Hundreds", "pay-hundreds", input_type.TEXT, false, null, 0.0);
     const fifties = display_input("Fifties", "pay-fifties", input_type.TEXT, false, null, 0.0);
     const twenties = display_input("Twenties", "pay-twenties", input_type.TEXT, false, null, 0.0);
@@ -52,10 +54,13 @@ export default function display_form(id, user_info){
         grid_two(teller, paydate), grid_two(Name, ssn_accnt),
         grid_two(pay_method,pay_amount),
         grid_two(
-            in_div(address_line,grid_three(city, state, zip)),
+            in_div(email, address_line,grid_three(city, state, zip)),
             in_div(grid_three(hundreds, tens,ones), grid_three(fifties, fives, coins), grid_three(twenties, twos, cash_total))
         )
-        ,grid_two(email_receipt, email_receipt_sent),
+        ,grid_two(
+            in_div(email_receipt, email_receipt_sent),
+            in_div(system)
+        ),
        comments
     );
 
@@ -112,7 +117,15 @@ export default function display_form(id, user_info){
         }
         const payment = {
             "ssn_hash": ssn_accnt.input.value,
+            "last_four": ssn_accnt.input.value.substring(ssn_accnt.input.value.length - 4, ssn_accnt.input.value.length),
             "payment_date": paydate.input.value,
+            "name": Name.input.value,
+            "address": address_line.input.value,
+            "city": city.input.value,
+            "state": state.input.value,
+            "zip_code": zip.input.value,
+            "email": email.input.value,
+            "system": system.input.value,
             "cash_amount": cash_total.input.value,
             "check_amount": check_amount,
             "credit_amount": credit_amount,
@@ -123,7 +136,9 @@ export default function display_form(id, user_info){
             "payment_amount": pay_amount.input.value,
             "change_due": null,
             "comments": comments.input.value,
-            "receipt_emailed_date": email_receipt_sent.input.value
+            "receipt_emailed_date": email_receipt_sent.input.value,
+
+
         };
         await window.pywebview.api.data.make_payment(payment);
         console.log(payment);
