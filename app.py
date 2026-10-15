@@ -65,6 +65,7 @@ def start_payment_window():
 
     threading.Thread(target=run_server, daemon=True).start()
 
+
     window = webview.create_window(
         title="Payment Window",
         url="index.html",
@@ -72,9 +73,12 @@ def start_payment_window():
         width=avgWidth / 2,
         height=avgHeight - 50/.25, )
 
-    webview.start(debug=True)
+    webview.start(debug=False)
 
 
 if "__main__" == __name__:
-    webbrowser.open("http://nmpr-tableau.nmeaf.org/#/signin?externalRedirect=/views/PaymentWindowAccountLookup/Dashboard1?:showAppBanner%3Dfalse%26:display_couhttp://nmpr-tableau.nmeaf.org/views/PaymentWindowAccountLookup/Dashboard1?:embed%3Dyes%26:toolbar%3Dno&site=")
-    start_payment_window()
+    try:
+        webbrowser.open("http://nmpr-tableau.nmeaf.org/#/signin?externalRedirect=/views/PaymentWindowAccountLookup/Dashboard1?:showAppBanner%3Dfalse%26:display_couhttp://nmpr-tableau.nmeaf.org/views/PaymentWindowAccountLookup/Dashboard1?:embed%3Dyes%26:toolbar%3Dno&site=")
+        start_payment_window()
+    except webview.errors.JavascriptException as e:
+        print("There was an error.")

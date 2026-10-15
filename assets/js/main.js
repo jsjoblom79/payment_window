@@ -11,13 +11,12 @@ export default async function display_main(){
     section.setAttribute("aria-labelledby", "list-title");
 
     const pageHead = display_page_head();
-    section.append(pageHead);
+
     main.append(section);
     const data = await window.pywebview.api.data.get_all_payments();
-    console.log(data);
     const table = await display_table(data);
     const form = display_form("payment", userinfo);
-    section.append(form, table);
+    section.append(form, pageHead, table);
     return main;
 }
 
@@ -27,7 +26,7 @@ function display_page_head(){
     const h1 = document.createElement('h1');
     const p = document.createElement('p');
     h1.textContent = "Prior Payments";
-    p.textContent = "Search for entered payments";
+    //p.textContent = "Search for entered payments";
 
     div.append(h1, p);
     page_head.append(div);

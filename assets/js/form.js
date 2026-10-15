@@ -49,6 +49,7 @@ export default function display_form(id, user_info){
     ones.addEventListener('change', (e) => {cash_total.add();});
     twos.addEventListener('change', (e) => { cash_total.add();});
     coins.addEventListener('change', (e) => {cash_total.add();});
+    email_receipt.addEventListener("change", () => {em});
     const cash_amount_fields = [hundreds, fifties, twenties, tens, fives, ones, twos, coins];
     form.append(
         grid_two(teller, paydate), grid_two(Name, ssn_accnt),
@@ -58,8 +59,8 @@ export default function display_form(id, user_info){
             in_div(grid_three(hundreds, tens,ones), grid_three(fifties, fives, coins), grid_three(twenties, twos, cash_total))
         )
         ,grid_two(
-            in_div(email_receipt, email_receipt_sent),
-            in_div(system)
+            in_div(system),
+            in_div(email_receipt, email_receipt_sent)
         ),
        comments
     );
@@ -106,7 +107,7 @@ export default function display_form(id, user_info){
         let check_amount = 0;
         let credit_amount = 0;
         const payMethod = pay_method.getValue();
-        console.log(payMethod);
+
         switch(payMethod){
             case "check":
                 check_amount = pay_amount.input.value;
@@ -137,11 +138,18 @@ export default function display_form(id, user_info){
             "change_due": null,
             "comments": comments.input.value,
             "receipt_emailed_date": email_receipt_sent.input.value,
+            "teller": teller.input.value
 
 
         };
-        await window.pywebview.api.data.make_payment(payment);
-        console.log(payment);
+        try {
+            const result = await window.pywebview.api.data.make_payment(payment);
+            console.log(result);
+        } catch (e) {
+            console.log("Payment Finished.");
+        }
+
+
     }, btn_type.PRIMARY);
     form.append(button);
     div.append(form);

@@ -62,6 +62,7 @@ class Payment(Base):
     receipt_emailed_date: Mapped[datetime | None] = mapped_column(
         DateTime, nullable=True
     )
+    teller: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     def __repr__(self) -> str:
         return (
@@ -76,17 +77,18 @@ class Payment(Base):
             "City": self.city,
             "State": self.state,
             "Zip": self.zip_code,
-            "Teller": "",
+            "Teller": self.teller,
             "PaymentDate": self.payment_date.isoformat() if self.payment_date else None,
             "PaymentAmount": float(self.payment_amount) if self.payment_amount is not None else 0.0,
             "PaymentType": self.payment_method,
             "Comments": self.comments,
-            "Invoice": ""
+            "Invoice": self.id,
+            "EmailAddress": self.email,
         }
     def to_dict(self):
         return {
             "id": self.id,
-            "last_four": f"xxx-xx-{self.last_four}",
+            "last_four": f"XXX-XX-{self.last_four}",
             "payment_date": self.payment_date.isoformat() if self.payment_date else None,
             "payment_amount": float(self.payment_amount) if self.payment_amount is not None else 0.0,
             # "check_amount": float(self.check_amount) if self.check_amount is not None else 0.0,

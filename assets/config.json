@@ -1,3 +1,5 @@
 {
-  "receipt_template": "./Receipt_Template.docx"
+  "receipt_template": "\\\\nmeaf.org\\files\\shares\\DM\\PaymentWindow2026\\Receipt_Template.docx",
+  "saved_receipts": "\\\\nmeaf.org\\files\\shares\\DM\\PaymentWindow2026\\Receipts",
+  "db": "\\\\nmeaf.org\\files\\Shares\\DM\\PaymentWindow2026\\data\\payments.db"
 }

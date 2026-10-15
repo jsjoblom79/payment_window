@@ -139,15 +139,16 @@ export function display_input(input_label, input_id, input_type, required = fals
 }
 
 let payment_method_value = null;
-export function display_options(content, id, options, option_type){
+export function display_options(content, id, options, optionType){
 
     const fs = document.createElement('fieldset');
     const legend = document.createElement('legend');
     const div = document.createElement('div');
-    if(option_type === option_type.RADIO){
+    console.log(optionType);
+    if(optionType === option_type.RADIO){
        legend.textContent = content;
     }
-    legend.textContent = content;
+    //legend.textContent = content;
     div.classList.add('options');
 
 
@@ -157,7 +158,7 @@ export function display_options(content, id, options, option_type){
             const label = document.createElement('label');
             label.classList.add('check');
             const input = document.createElement('input');
-            input.type = option_type;
+            input.type = optionType;
             input.name = content;
             input.value = option;
             label.append(input,option);

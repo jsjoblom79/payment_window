@@ -171,7 +171,7 @@ textarea.input { min-height: 96px; resize: vertical; }
 @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
 fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
 .options { display: flex; flex-wrap: wrap; gap: 8px 20px; }
-.check { display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer; }
+.check { display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer; margin: 10px; }
 .check input { width: 18px; height: 18px; accent-color: var(--primary); margin: 0; }
 .form-actions {
   display: flex; gap: 8px; padding-top: 6px;
