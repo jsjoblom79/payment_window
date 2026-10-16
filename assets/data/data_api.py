@@ -7,7 +7,7 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from mailmerge import MailMerge
-
+from docx2pdf import convert
 from assets.data.payment import Base, Payment
 
 
@@ -86,7 +86,11 @@ class DataAPI:
         mail.To = data["EmailAddress"]
         mail.Subject = "Payment Receipt"
         mail.Body = f"Thank you for you recent payment of  ${self.fmt_money(data["PaymentAmount"])}.\n\nPlease find attached your payment receipt.\n\nThank you,\nFront Desk"
-        mail.Attachments.Add(os.path.join(self.config["saved_receipts"], docName))
+
+        sourceFile = os.path.join(self.config["saved_receipts"], docName)
+        destFile = os.path.join(self.config["saved_receipts"], docName.replace("docx", "pdf"))
+        convert(sourceFile, destFile)
+        mail.Attachments.Add(destFile)
         mail.Display()
 
         os.startfile(os.path.join(self.config["saved_receipts"], docName))

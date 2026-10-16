@@ -1,7 +1,7 @@
 "use strict";
 
-import display_table from "/assets/js/table.js";
-import display_form from "/assets/js/form.js";
+import display_table from "/js/table.js";
+import display_form from "/js/form.js";
 
 export default async function display_main(){
     const main = document.createElement('main');

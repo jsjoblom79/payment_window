@@ -68,12 +68,12 @@ def start_payment_window():
 
     window = webview.create_window(
         title="Payment Window",
-        url="index.html",
+        url="pindex.html",
         js_api=api,
         width=avgWidth / 2,
         height=avgHeight - 50/.25, )
 
-    webview.start(debug=False)
+    webview.start(debug=True)
 
 
 if "__main__" == __name__:

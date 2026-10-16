@@ -1,5 +1,5 @@
-import {display_topbar} from "/assets/js/components.js";
-import display_main from "/assets/js/main.js";
+import {display_topbar} from "/js/components.js";
+import display_main from "/js/main.js";
 
 let main;
 window.addEventListener('pywebviewready', async () =>{

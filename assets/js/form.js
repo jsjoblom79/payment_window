@@ -7,7 +7,7 @@ import display_button, {
     grid_two, in_div,
     input_type,
     option_type, returnFormattedDate
-} from "/assets/js/components.js";
+} from "/js/components.js";
 
 export default function display_form(id, user_info){
     const div = document.createElement('div');
