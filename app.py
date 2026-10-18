@@ -2,7 +2,7 @@ import webview, threading, json
 from screeninfo import get_monitors
 from flask import Flask, request
 import webbrowser
-
+import sys, os
 from assets.data.data_api import DataAPI
 
 app = Flask(__name__)
@@ -48,6 +48,9 @@ def data_import():
 def run_server():
     app.run(port=5050)
 
+def resource_path(relative):
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, relative)
 
 def start_payment_window():
     monitors = get_monitors()
@@ -68,7 +71,7 @@ def start_payment_window():
 
     window = webview.create_window(
         title="Payment Window",
-        url="pindex.html",
+        url=resource_path(os.path.join("assets","index.html")),
         js_api=api,
         width=avgWidth / 2,
         height=avgHeight - 50/.25, )

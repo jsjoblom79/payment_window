@@ -1,0 +1,5 @@
+{
+  "receipt_template": "Receipt_Template.docx",
+  "saved_receipts": "Receipts",
+  "db": "payments.db"
+}

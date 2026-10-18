@@ -9,7 +9,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from mailmerge import MailMerge
 from docx2pdf import convert
 from assets.data.payment import Base, Payment
-
+import sys
 
 
 def parse_date(value):
@@ -18,9 +18,12 @@ def parse_date(value):
         return None
     return datetime.strptime(value, "%Y-%m-%d").date()
 
+def resource_path(relative):
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, relative)
 class DataAPI:
     def __init__(self):
-        with open("assets/config.json", "r") as f:
+        with open("/assets/config.json", "r") as f:
             self.config = json.load(f)
 
         try:

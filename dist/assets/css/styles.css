@@ -1,0 +1,187 @@
+/* ============ 1. DESIGN TOKENS ============ */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f0f2f5;
+  --border: #dfe3e8;
+  --text: #1c2430;
+  --text-muted: #5f6b7a;
+  --primary: #2f5bea;
+  --primary-hover: #2449c4;
+  --primary-text: #ffffff;
+  --danger: #c7372f;
+  --danger-bg: #fdecea;
+  --ok: #1d7a46;
+  --ok-bg: #e4f5ea;
+  --warn: #96600a;
+  --warn-bg: #fdf1dc;
+  --info: #2f5bea;
+  --info-bg: #e8eefd;
+  --radius: 8px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+  --space: 16px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161c;
+    --surface: #1b212a;
+    --surface-2: #232b36;
+    --border: #313a47;
+    --text: #e8ecf1;
+    --text-muted: #9aa6b5;
+    --primary: #5b82ff;
+    --primary-hover: #7a9aff;
+    --primary-text: #0d1220;
+    --danger: #ff7b72;
+    --danger-bg: #3a1f1f;
+    --ok: #5fd08a;
+    --ok-bg: #173325;
+    --warn: #f0b95a;
+    --warn-bg: #3a2d14;
+    --info: #8aa6ff;
+    --info-bg: #1f2a4a;
+    --shadow: none;
+  }
+}
+
+/* ============ 2. BASE ============ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 var(--font);
+}
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 17px; margin: 0 0 4px; }
+p  { margin: 0; }
+.muted { color: var(--text-muted); }
+
+/* ============ 3. LAYOUT ============ */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner, main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 var(--space);
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 650; }
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--primary); color: var(--primary-text);
+  display: grid; place-items: center; font-size: 15px;
+}
+main { padding-top: 24px; padding-bottom: 48px; }
+.page-head {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+[hidden] { display: none !important; }
+
+/* ============ 4. BUTTONS ============ */
+.btn {
+  font: inherit; font-weight: 550;
+  padding: 8px 14px; min-height: 38px;
+  border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  cursor: pointer;
+}
+.btn:hover { background: var(--surface-2); }
+.btn:focus-visible, .input:focus-visible, .check input:focus-visible {
+  outline: 2px solid var(--primary); outline-offset: 2px;
+}
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--primary-text); }
+.btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn-danger { color: var(--danger); border-color: var(--danger); background: transparent; }
+.btn-danger:hover { background: var(--danger-bg); }
+.btn-small { padding: 4px 10px; min-height: 30px; font-size: 13px; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ============ 5. TOOLBAR + TABLE ============ */
+.toolbar {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  padding: 12px var(--space);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.toolbar .grow { flex: 1 1 220px; }
+.table-wrap { overflow-x: scroll; }
+table { width: 100%; border-collapse: collapse; height: 200px; max-height: 300px; }
+th, td { text-align: left; padding: 11px var(--space); white-space: nowrap; }
+th {
+  font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--text-muted); background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+td { border-bottom: 1px solid var(--border); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--surface-2); }
+tbody tr.selected { background: var(--info-bg); }
+td.title-cell { white-space: normal; min-width: 200px; font-weight: 550; }
+td.actions { text-align: right; }
+.table-foot {
+  padding: 10px var(--space); border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--text-muted);
+}
+.empty { padding: 40px var(--space); text-align: center; color: var(--text-muted); }
+
+.badge {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+}
+.badge.todo       { background: var(--surface-2); color: var(--text-muted); }
+.badge.inprogress { background: var(--info-bg); color: var(--info); }
+.badge.done       { background: var(--ok-bg); color: var(--ok); }
+.prio-high   { color: var(--danger); font-weight: 600; }
+.prio-medium { color: var(--warn);   font-weight: 600; }
+.prio-low    { color: var(--text-muted); }
+
+/* ============ 6. FORM CONTROLS ============ */
+form { padding: 15px; display: grid; gap: 10px; max-width: 900px; }
+.field { display: grid; gap: 6px; }
+label, legend { font-weight: 600; font-size: 14px; }
+.hint { font-size: 13px; color: var(--text-muted); }
+.error { font-size: 13px; color: var(--danger); min-height: 0; }
+.input {
+  font: inherit; width: 100%;
+  padding: 9px 12px; min-height: 40px;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface); color: var(--text);
+}
+textarea.input { min-height: 96px; resize: vertical; }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.grid-2 { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
+.grid-3 { display: grid; gap: 15px; grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
+.options { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.check { display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer; margin: 10px; }
+.check input { width: 18px; height: 18px; accent-color: var(--primary); margin: 0; }
+.form-actions {
+  display: flex; gap: 8px; padding-top: 6px;
+  border-top: 1px solid var(--border); padding-top: 18px;
+}
+
+/* ============ 7. TOAST ============ */
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--text); color: var(--bg);
+  padding: 10px 18px; border-radius: 8px; font-weight: 550;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
