@@ -7,7 +7,7 @@ export default async function display_main(){
     const main = document.createElement('main');
     const section = document.createElement('section');
     const userinfo = await window.pywebview.api.data.get_current_user();
-    console.log(userinfo);
+
     section.setAttribute("aria-labelledby", "list-title");
 
     const pageHead = display_page_head();

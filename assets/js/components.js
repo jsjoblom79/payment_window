@@ -144,7 +144,7 @@ export function display_options(content, id, options, optionType){
     const fs = document.createElement('fieldset');
     const legend = document.createElement('legend');
     const div = document.createElement('div');
-    console.log(optionType);
+
     if(optionType === option_type.RADIO){
        legend.textContent = content;
     }

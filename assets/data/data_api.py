@@ -23,7 +23,7 @@ def resource_path(relative):
     return os.path.join(base, relative)
 class DataAPI:
     def __init__(self):
-        with open("/assets/config.json", "r") as f:
+        with open(resource_path(os.path.join("assets","config.json")), "r") as f:
             self.config = json.load(f)
 
         try:
